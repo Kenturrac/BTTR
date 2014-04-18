@@ -2,8 +2,6 @@
 	For DayZ Epoch
 	Addons Credits: Jetski Yanahui by Kol9yN, Zakat, Gerasimow9, YuraPetrov, zGuba, A.Karagod, IceBreakr, Sahbazz
 */
-//Debug console
-//#include "custom\debug_console\debug_console.hpp"
 
 startLoadingScreen ["","RscDisplayLoadCustom"];
 cutText ["","BLACK OUT"];
