@@ -50,9 +50,9 @@ MaxVehicleLimit_Overall = 300; // not in use any more - ignore it
 MaxVehicleLimit_Land = 220;
 MaxVehicleLimit_Air = 7;
 MaxVehicleLimit_Sea = 6;
-MaxDynamicDebris = 30; // Default = 100
+MaxDynamicDebris = 00; // Default = 100
 
-dayz_MapArea = 24000; // Default = 10000
+dayz_MapArea = 48000; // Default = 10000
 
 dayz_paraSpawn = false;
 DZE_R3F_WEIGHT = true;	// player gewicht
