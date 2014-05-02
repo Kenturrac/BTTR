@@ -58,28 +58,28 @@ if (_type == "medical") then {
 if (_type == "Ikea") then {
 	
 	_scount = count DZMSIkeaListBig;
-	for "_x" from 5 to 10 do {
+	for "_x" from 4 to 9 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListBig select _sSelect;
 		_crate addMagazineCargoGlobal [_item,2];
 	};
 	
 		_scount = count DZMSIkeaListWoodpack;
-	for "_x" from 5 to 12 do {
+	for "_x" from 4 to 10 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListWoodpack select _sSelect;
 		_crate addMagazineCargoGlobal [_item,1];
 	};
 	
 		_scount = count DZMSIkeaListCinder;
-	for "_x" from 1 to 4 do {
+	for "_x" from 1 to 3 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListCinder select _sSelect;
 		_crate addMagazineCargoGlobal [_item,2];
 	};
 	
 		_scount = count DZMSIkeaListMetal;
-	for "_x" from 0 to 6 do {
+	for "_x" from 0 to 5 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListMetal select _sSelect;
 		_crate addMagazineCargoGlobal [_item,2];
@@ -100,7 +100,7 @@ if (_type == "Ikea") then {
 	};
 	
 		_scount = count _bpackList;
-	for "_x" from 0 to 3 do {
+	for "_x" from 0 to 2 do {
 		_sSelect = floor(random _sCount);
 		_item = _bpackList select _sSelect;
 		_crate addBackpackCargoGlobal [_item,1];
@@ -128,21 +128,21 @@ if (_type == "Ikea") then {
 if (_type == "Ikeasmall") then {
 	
 	_scount = count DZMSIkeaListBig;
-	for "_x" from 5 to 10 do {
+	for "_x" from 4 to 9 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListBig select _sSelect;
 		_crate addMagazineCargoGlobal [_item,1];
 	};
 	
 			_scount = count DZMSIkeaListWood;
-	for "_x" from 15 to 25 do {
+	for "_x" from 14 to 24 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListWood select _sSelect;
 		_crate addMagazineCargoGlobal [_item,1];
 	};
 	
 			_scount = count DZMSIkeaListCinder;
-	for "_x" from 5 to 10 do {
+	for "_x" from 4 to 9 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListCinder select _sSelect;
 		_crate addMagazineCargoGlobal [_item,1];
@@ -177,7 +177,7 @@ if (_type == "Ikeasmall") then {
 if (_type == "IkeaWood") then {
 	
 	_scount = count DZMSIkeaListBig;
-	for "_x" from 2 to 8 do {
+	for "_x" from 2 to 7 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListBig select _sSelect;
 		_crate addMagazineCargoGlobal [_item,(round(random 2))];
@@ -191,14 +191,14 @@ if (_type == "IkeaWood") then {
 	};
 	
 		_scount = count DZMSIkeaListWood;
-	for "_x" from 5 to 20 do {
+	for "_x" from 4 to 18 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListWood select _sSelect;
 		_crate addMagazineCargoGlobal [_item,1];
 	};
 	
 		scount = count DZMSIkeaListWoodpack;
-	for "_x" from 5 to 12 do {
+	for "_x" from 4 to 11 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListWoodpack select _sSelect;
 		_crate addMagazineCargoGlobal [_item,1];
@@ -240,14 +240,14 @@ if (_type == "IkeaCinder") then {
 	};
 	
 		_scount = count DZMSIkeaListCinder;
-	for "_x" from 1 to 5 do {
+	for "_x" from 1 to 4 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListCinder select _sSelect;
 		_crate addMagazineCargoGlobal [_item,(round(random 3))];
 	};
 	
 			_scount = count DZMSIkeaListCinder;
-	for "_x" from 3 to 5 do {
+	for "_x" from 2 to 4 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListCinder select _sSelect;
 		_crate addMagazineCargoGlobal [_item,2];
@@ -282,21 +282,21 @@ if (_type == "IkeaCinder") then {
 if (_type == "IkeaMetal") then {
 	
 	_scount = count DZMSIkeaListBig;
-	for "_x" from 0 to 10 do {
+	for "_x" from 0 to 9 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListBig select _sSelect;
 		_crate addMagazineCargoGlobal [_item,(round(random 2))];
 	};
 	
 		_scount = count DZMSIkeaListMetal;
-	for "_x" from 5 to 10 do {
+	for "_x" from 4 to 9 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSIkeaListMetal select _sSelect;
 		_crate addMagazineCargoGlobal [_item,2];
 	};
 	
 	_scount = count DZMSTools;
-	for "_x" from 2 to 4 do {
+	for "_x" from 1 to 4 do {
 		_sSelect = floor(random _sCount);
 		_item = DZMSTools select _sSelect;
 		_crate addWeaponCargoGlobal [_item,(round(random 1))];
@@ -338,7 +338,7 @@ if (_type == "Skins") then {
 	};
 
 	_scount = count _money;
-	for "_x" from 0 to 1 do {
+	for "_x" from 0 to 2 do {
 		_sSelect = floor(random _sCount);
 		_item = _money select _sSelect;
 		_crate addMagazineCargoGlobal [_item,1];

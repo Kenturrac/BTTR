@@ -1,4 +1,4 @@
-private ["_nul","_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_vehiclesWithOwner","_vehicleWithoutOwner","_object","_idKey","_type","_ownerID","_worldspace","_intentory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_val","_traderid","_retrader","_traderData","_id","_lockable","_debugMarkerPosition","_vehicle_0","_bQty","_vQty","_BuildingQueue","_objectQueue","_superkey","_shutdown","_res","_hiveLoaded"];
+private ["_nul","_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_intentory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_val","_traderid","_retrader","_traderData","_id","_lockable","_debugMarkerPosition","_vehicle_0","_bQty","_vQty","_BuildingQueue","_objectQueue","_superkey","_shutdown","_res","_hiveLoaded"];
 
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 	getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
@@ -105,7 +105,6 @@ if (isServer and isNil "sm_done") then {
 	
 	// # NOW SPAWN OBJECTS #
 	_totalvehicles = 0;
-	_vehiclesWithOwner = 0;
 	{
 		_idKey = 		_x select 1;
 		_type =			_x select 2;
@@ -270,7 +269,6 @@ if (isServer and isNil "sm_done") then {
 					
 					if(_ownerID != "0" and !(_object isKindOf "Bicycle")) then {
 						_object setvehiclelock "locked";
-						_vehiclesWithOwner = _vehiclesWithOwner + 1;
 					};
 					
 					_totalvehicles = _totalvehicles + 1;
@@ -327,11 +325,9 @@ if (isServer and isNil "sm_done") then {
 
 	if (_hiveLoaded) then {
 		//  spawn_vehicles
-		//_vehLimit = MaxVehicleLimit - _totalvehicles;   //-original Epoch code
-		_vehicleWithoutOwner = _totalvehicles - _vehicleWithOwner;		//don't count the vehicles with owner
-		_vehLimit = MaxVehicleLimit - _vehicleWithoutOwner;
+		_vehLimit = MaxVehicleLimit - _totalvehicles;
 		if(_vehLimit > 0) then {
-			diag_log format["HIVE: Spawning of %1 new Vehicles. Vehicles with owner: %2. Vehicles without owner: %3.", _vehLimit, _vehicleWithOwner, _vehicleWithoutOwner];
+			diag_log ("HIVE: Spawning # of Vehicles: " + str(_vehLimit));
 			for "_x" from 1 to _vehLimit do {
 				[] spawn spawn_vehicles;
 			};

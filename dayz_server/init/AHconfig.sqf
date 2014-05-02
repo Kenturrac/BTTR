@@ -1,69 +1,70 @@
 /* ********************************************************************************* */
 /* *******************Developer : infiSTAR (infiSTAR23@gmail.com)******************* */
-/* ********************Copr. ©2014 infiSTAR all rights reserved********************* */
+/* ******************Copyright © 2014 infiSTAR all rights reserved****************** */
 /* *********************************www.infiSTAR.de********************************* */
 /*  Key to open the menu  */ _OpenMenuKey = 0x0A;    /* google DIK_KeyCodes (0x3C is F2) */
-/*  Use Admin Login PW ?  */ _UAP = true;    /* true or false */	/* recommended:  true */
-/*  Admin Login Password  */ _AdminPassword = "!ep1";
 /*  LOW ADMIN HERE        */ _LowLevel_List =   ["0","0","0"]; //do not have a , at the end.
 /*  NORMAL ADMIN HERE     */ _NormalLevel_List =["0","0","0"]; //do not have a , at the end.
 /*  SUPER ADMIN HERE      */ _SuperLevel_List = ["0","0","0"]; //do not have a , at the end.
 /*  BANNED PLAYER HERE    */ _BLOCKED =         ["0","0","0"]; //do not have a , at the end.
 /* ********************************************************************************* */
-/*  Top esc menu TXT      */ _TopOfESC = 'Back to the Roots'; //do not use ' or " in this text.
-/*  Bottom esc menu TXT   */ _LowerTop = 'Homepage: coming soon..'; //do not use ' or " in this text.
-/*  Bottom esc menu TXT2  */ _LowerBottom = 'TS:146.0.32.47 PW:epoch'; //do not use ' or " in this text.
+/*  Top esc menu TXT      */ _TopOfESC = "Back to the Roots"; //do not use " in this text.
+/*  Bottom esc menu TXT   */ _LowerTop = "Web: www.bttr-dayz.de"; //do not use " in this text.
+/*  Bottom esc menu TXT2  */ _LowerBottom = "TS:146.0.32.47 PW:epoch"; //do not use " in this text.
 /*  Color esc menu TXT    */ _EscColor = [0.6,0,0,1];
-/*  DebugMonitor TXT      */ _BottomDebug = '[BttR]'; //do not use ' or " in this text.
+/*  DebugMonitor TXT      */ _BottomDebug = "[BttR]"; //do not use " in this text.
 /*  DebugMonitor Key      */ _ODK =  0xCF;	/* google DIK_KeyCodes (0xCF is END) */
 /*  Use DebugMonitor      */ _DMS =  true;	/* true or false */	/* starts up with debugmonitor ON if true */
 /*  DebugMonitor Action   */ _DMW = false;	/* true or false */	/* "Debug" option on mousewheel */
 /*  Mod EPOCH ?           */ _MEH =  true;	/* true or false */
 /* ********************************************************************************* */
+/*  Use AUTOBAN HACKER    */ _UAB =  true;   /* true or false */	/* recommended:  true */	/* temp bans are cleared after a server restart */
 /*  Enable BadKey Kick    */ _BKK =  true;	/* true or false */	/* recommended:  true */	/* If people press a forbidden Key twice, they get kicked! */
-/*  Badkey: F1 - F12 ?    */ _BFK =  true;  /* true or false */
-/*  Remove 'itemsAdded'   */ _RAI =  true;	/* true or false */	/* recommended:  true */	/* might remove items from a custom crafting system.. */
-/*  HACKED BOX Check ?    */ _CHB =  true;	/* true or false */	/* recommended:  true */	/* some epoch player might want to turn this one off */
-/*  Max Cargo Count ?     */ _MCC = 600;
+/*  Forbid VON Sidechat   */ _VON =  true;   /* true or false */	/* recommended:  true */	/* talking on sidechat will put out a warning and kick if continue */
+
+/*  Break Functions ?     */  BHF =  true;   /* true or false */	/* recommended:  true */	/* break some known functions used by hacks! */
 /*  Use vehicle check?    */ _UVC =  true;	/* true or false */	/* recommended: false */	/* using _ALLOWED_Vehicles and _FORBIDDEN_Vehicles lists */
 /*  Vehicle WHITELIST     */ _UVW = false;   /* true or false */	/* recommended: false */	/* if false - _ALLOWED_Vehicles won't not be used */
-/*  Use AUTOBAN HACKER    */ _UAB =  true;   /* true or false */	/* recommended:  true */	/* temp bans are cleared after a server restart */
-/*  Forbid VON Sidechat   */ _VON =  true;   /* true or false */	/* recommended:  true */	/* talking on sidechat will put out a warning and kick if continue */
+
 /*  Use FileScan ?        */ _UFS =  true;   /* true or false */	/* recommended:  true */	/* spams the rpt but often finds hackers */
+/*  Use Anti Teleport?    */ _UAT =  true;	/* true or false */	/* recommended:  true */	/* true = teleports them back, false = only logging */
 /*  Use cut-scene ?       */ _UCS =  true;   /* true or false */	/* recommended:  true */	/* dynamicText ~ often colored, animated or used in credits */
-/*  Use SafeZones ?       */ _USZ =  true;   /* true or false */	/* recommended:  true */	/* if you have a zone where people get godmode/anti zombie aggro (most Epoch server do have this!) */
+
+/*  Remove "itemsAdded"   */ _RAI =  true;	/* true or false */	/* recommended:  true */	/* might remove items from a custom crafting system.. */
+/*  HACKED BOX Check ?    */ _CHB =  true;	/* true or false */	/* recommended:  true */	/* some epoch player might want to turn this one off */
+/*  Max Cargo Count ?     */ _MCC =  650;
+
 /*  Check CMDMenus ?      */ _CCM =  true;   /* true or false */	/* recommended:  true */	/* only disable this if you know what you are doing. */
 /*  BLOCK ALL CMDMenus    */ _BCM =  true;   /* true or false */	/* recommended:  true */	/* we don't need commandingMenus. so have this true. */
 /*  Check Actions ?       */ _CSA =  true;   /* true or false */	/* recommended:  true */	/* if you have custom mousewheel actions you can simply disable this */
-/*  Break Hack Functions  */ _BHF =  true;   /* true or false */	/* recommended:  true */	/* break some of the game functions that are not used from default mod files */
 /* ********************************************************************************* */
 /*  Player that have one of the items in _ForbiddenWeapons in their inventory will get punished!  */
 /*  FORBIDDEN Weapons     */ _ForbiddenWeapons =
 [
-	'ItemMap_Debug','ItemCore','Laserdesignator'
+	"ItemMap_Debug","ItemCore","Laserdesignator"
 ];
 /* ********************************************************************************* */
 /*  If _UVC = true; and _UVW = true; this check will start and delete all vehicles that are not in _ALLOWED_Vehicles  */
-/*  ALLOWED  Vehicles     */ _ALLOWED_Vehicles = ['ALL IF _UVW = false','Tractor','Policecar'];
+/*  ALLOWED  Vehicles     */ _ALLOWED_Vehicles = ["ALL IF _UVW = false","Tractor","Policecar"];
 /* ********************************************************************************* */
 /*  If _UVC = true; this check will start and delete all vehicles that are in _FORBIDDEN_Vehicles  */
 /*  FORBIDDEN Vehicles    */ _FORBIDDEN_Vehicles =
 [
-	'A10','AH1Z','AH64D','T90','F35B','AV8B2','UH1Y','Mi24_V',
-	'Mi24_P','Mi24_D','KA52','KA52Black','SU39','Su25_CDF','SU25_Ins',
-	'A10_US_EP1','AH64D_EP1','M1A1','M1A1_TUSK_MG','T72','T72_INS','T72_RU',
-	'T72_CDF','T72_Gue','BMP3','MLRS','T34','2S6M_Tunguska'
+	"A10","AH1Z","AH64D","T90","F35B","AV8B2","UH1Y","Mi24_V",
+	"Mi24_P","Mi24_D","KA52","KA52Black","SU39","Su25_CDF","SU25_Ins",
+	"A10_US_EP1","AH64D_EP1","M1A1","M1A1_TUSK_MG","T72","T72_INS","T72_RU",
+	"T72_CDF","T72_Gue","BMP3","MLRS","T34","2S6M_Tunguska"
 ];
 /* ********************************************************************************* */
 /*  ALLOWED CMDMenus are only used if you have _BCM = false; which I would not recommend.  */
-/*  ALLOWED CMDMenus      */ _cMenu = 
+/*  ALLOWED CMDMenus      */ _cMenu =
 [
-	'','RscMainMenu','RscMoveHigh','#WATCH','#WATCH0',
-	'RscWatchDir','RscDisplayClassSelecter','RscDisplayGenderSelect',
-	'RscDisplaySpawnSelecter','RscWatchMoreDir','#GETIN','RscStatus',
-	'RscCombatMode','RscFormations','RscTeam','RscSelectTeam','RscReply',
-	'RscCallSupport','#ACTION','#CUSTOM_RADIO','RscRadio','RscGroupRootMenu',
-	'BTC_Hud'
+	"","RscMainMenu","RscMoveHigh","#WATCH","#WATCH0",
+	"RscWatchDir","RscDisplayClassSelecter","RscDisplayGenderSelect",
+	"RscDisplaySpawnSelecter","RscWatchMoreDir","#GETIN","RscStatus",
+	"RscCombatMode","RscFormations","RscTeam","RscSelectTeam","RscReply",
+	"RscCallSupport","#ACTION","#CUSTOM_RADIO","RscRadio","RscGroupRootMenu",
+	"BTC_Hud"
 ];
 /* ********************************************************************************* */
 /*  ALLOWED Actions are only used if you have _CSA =  true;  */
@@ -80,7 +81,7 @@
 	Tow_settings_action_charger_deplace,Tow_settings_action_selectionner_objet_remorque,Tow_settings_action_remorquer_selection,Tow_settings_action_remorquer_deplace,
 	Tow_settings_action_detacher,Tow_settings_action_contenu_vehicule,Tow_settings_dlg_CV_titre,Tow_settings_dlg_CV_btn_decharger,Tow_settings_dlg_CV_btn_fermer,
 	_heliporteur,s_player_makePLBomb,s_player_stats,s_player_deploybike,s_player_packbike,s_player_deploygyro,s_player_upgradebike,nul,
-	s_player_equip_carry,s_player_showname,s_player_showname1,s_player_smeltItems,
+	s_player_equip_carry,s_player_showname,s_player_showname1,s_player_smeltItems,s_building_snapping,s_player_downgrade_build,
 	s_player_debug,s_player_calldog,s_player_speeddog,s_player_movedog,s_player_followdog,s_player_warndog,s_player_barkdog,s_player_trackdog,
 	s_player_staydog,s_player_waterdog,s_player_feeddog,s_player_tamedog,s_player_repair_crtl,s_player_towing,
 	s_player_fillgen,s_player_maint_build,s_player_fuelauto2,s_player_fuelauto,s_player_information,
@@ -110,5 +111,5 @@
 ] + s_player_removeActions + s_player_repairActions + r_player_actions + r_player_actions2 + s_player_parts + s_player_combi + s_player_lockunlock)";
 /* ********************************************************************************* */
 /* *******************Developer : infiSTAR (infiSTAR23@gmail.com)******************* */
-/* ********************Copr. ©2014 infiSTAR all rights reserved********************* */
+/* ******************Copyright © 2014 infiSTAR all rights reserved****************** */
 /* *********************************www.infiSTAR.de********************************* */

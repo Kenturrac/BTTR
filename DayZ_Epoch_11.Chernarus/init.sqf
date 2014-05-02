@@ -46,10 +46,13 @@ spawnLocations_Event = [						//spawnLocations [[X,Y,Z],MinRadius,MaxRadius)
 MaxHeliCrashes= 2;
 MaxAmmoBoxes = 0;		// Ammobox = 3
 MaxMineVeins = 0;		// Minen = 50
-MaxVehicleLimit = 350; // Default = 50
+MaxVehicleLimit_Overall = 300; // not in use any more - ignore it
+MaxVehicleLimit_Land = 220;
+MaxVehicleLimit_Air = 7;
+MaxVehicleLimit_Sea = 6;
 MaxDynamicDebris = 30; // Default = 100
 
-dayz_MapArea = 14000; // Default = 10000
+dayz_MapArea = 18000; // Default = 10000
 
 dayz_paraSpawn = false;
 DZE_R3F_WEIGHT = true;	// player gewicht
@@ -103,6 +106,7 @@ progressLoadingScreen 1.0;
 
 if (isServer) then {
 	call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\DayZ_Epoch_11.Chernarus\dynamic_vehicle.sqf";
+	call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\DayZ_Epoch_11.Chernarus\vehicle_spawn_lists.sqf";
 	//Compile vehicle configs
 	
 	// Add trader citys

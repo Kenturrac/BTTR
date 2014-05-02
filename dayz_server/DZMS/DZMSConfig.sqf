@@ -42,7 +42,7 @@ DZMSSceneryDespawnTimer = 2400;
 DZMSSceneryDespawnLoot = false;
 
 // How many player should be online to start a majormission
-DZMSMajorMinPlayer = 1;
+DZMSMajorMinPlayer = 5;
 
 // What is the minimum FPS to start a mission
 DZMSMinFPS = 4;
@@ -112,7 +112,7 @@ DZMSMajorMin = 1800;
 
 // Maximum time in seconds before a major mission will run.
 // A major mission will always run before this much time has passed. Default = 2000 (33.33 Minutes)
-DZMSMajorMax = 7300;
+DZMSMajorMax = 4200;
 
 // Time in seconds before a minor mission will run.
 // At least this much time will pass between minor missions. Default = 600 (10 Minutes)
