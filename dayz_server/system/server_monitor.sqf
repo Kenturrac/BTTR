@@ -1,4 +1,4 @@
-private ["_nul","_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_intentory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_val","_traderid","_retrader","_traderData","_id","_lockable","_debugMarkerPosition","_vehicle_0","_bQty","_vQty","_BuildingQueue","_objectQueue","_superkey","_shutdown","_res","_hiveLoaded"];
+private ["_resultLand","_resultAir","_resultSea","_VSL_Land","_lastIndex_VSL_Land","_VSL_Air","_lastIndex_VSL_Air","_VSL_Sea","_lastIndex_VSL_Sea","_vehicleAmountIn_VSL_Land","_vehicleAmountIn_VSL_Air","_vehicleAmountIn_VSL_Sea","_vehiclesWithOwner","_vehiclesWithoutOwner","_vehiclesWithoutOwner_Air","_vehiclesWithoutOwner_Sea","_vehiclesWithoutOwner_Land","_vehiclesToSpawn_Air","_vehiclesToSpawn_Sea","_vehiclesToSpawn_Land","_nul","_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_intentory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_val","_traderid","_retrader","_traderData","_id","_lockable","_debugMarkerPosition","_vehicle_0","_bQty","_vQty","_BuildingQueue","_objectQueue","_superkey","_shutdown","_res","_hiveLoaded"];
 
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 	getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
@@ -105,6 +105,48 @@ if (isServer and isNil "sm_done") then {
 	
 	// # NOW SPAWN OBJECTS #
 	_totalvehicles = 0;
+	_vehiclesWithOwner = 0;
+	_vehiclesWithoutOwner = 0;
+	_vehiclesWithoutOwner_Air = 0;
+	_vehiclesWithoutOwner_Sea = 0;
+	_vehiclesWithoutOwner_Land = 0;
+	
+	_amountInVSL_Land = 0;
+	
+	// VSL - Vehicle
+	_VSL_Land = VehicleSpawnList_Land;
+	_lastIndex_VSL_Land = (count _VSL_Land) - 1;
+	_vehicleAmountIn_VSL_Land = 0;
+	for "_x" from 0 to _lastIndex_VSL_Land do {
+		_vehicleAmountIn_VSL_Land = _vehicleAmountIn_VSL_Land + ((_VSL_Land select _x) select 1); 
+	};
+	diag_log format["Veh-Spawn: Amount of vehicles in VehicleSpawnList_Land: %1", _vehicleAmountIn_VSL_Land];
+	if (_vehicleAmountIn_VSL_Land < MaxVehicleLimit_Land) then {
+		diag_log format["HIVE: Warning - Not enough Land vehicle in the list to reach the Land vehicle maximum. Have to fill the server with vehicles from the generic list. Vehicles in the list: %1. Max Land vehicles: %2", _vehicleAmountIn_VSL_Land, MaxVehicleLimit_Land];
+	};
+	
+	_VSL_Air = VehicleSpawnList_Air;
+	_lastIndex_VSL_Air = (count _VSL_Air) - 1;
+	_vehicleAmountIn_VSL_Air = 0;
+	for "_x" from 0 to _lastIndex_VSL_Air do {
+		_vehicleAmountIn_VSL_Air = _vehicleAmountIn_VSL_Air + ((_VSL_Air select _x) select 1); 
+	};
+	diag_log format["Veh-Spawn: Amount of vehicles in VehicleSpawnList_Air: %1", _vehicleAmountIn_VSL_Air];
+	if (_vehicleAmountIn_VSL_Air < MaxVehicleLimit_Air) then {
+		diag_log format["HIVE: Warning - Not enough Air vehicle in the list to reach the Air vehicle maximum. Have to fill the server with vehicles from the generic list. Vehicles in the list: %1. Max Air vehicles: %2", _vehicleAmountIn_VSL_Air, MaxVehicleLimit_Air];
+	};
+	
+	_VSL_Sea = VehicleSpawnList_Sea;
+	_lastIndex_VSL_Sea = (count _VSL_Sea) - 1;
+	_vehicleAmountIn_VSL_Sea = 0;
+	for "_x" from 0 to _lastIndex_VSL_Sea do {
+		_vehicleAmountIn_VSL_Sea = _vehicleAmountIn_VSL_Sea + ((_VSL_Sea select _x) select 1); 
+	};
+	diag_log format["Veh-Spawn: Amount of vehicles in VehicleSpawnList_Sea: %1", _vehicleAmountIn_VSL_Sea];
+	if (_vehicleAmountIn_VSL_Sea < MaxVehicleLimit_Sea) then {
+		diag_log format["HIVE: Warning - Not enough Sea vehicle in the list to reach the Sea vehicle maximum. Have to fill the server with vehicles from the generic list. Vehicles in the list: %1. Max Sea vehicles: %2", _vehicleAmountIn_VSL_Sea, MaxVehicleLimit_Sea];
+	};
+	
 	{
 		_idKey = 		_x select 1;
 		_type =			_x select 2;
@@ -271,6 +313,71 @@ if (isServer and isNil "sm_done") then {
 						_object setvehiclelock "locked";
 					};
 					
+					//count vehicles
+					if(_ownerID != "0") then { 			//vehicles with an ID are vehicles who have an owner or atleast a key
+						_vehiclesWithOwner = _vehiclesWithOwner + 1;
+					} else {								//vehicles without an ID are vehicles who don't have an owner or a key
+						//diag_log format["Veh-Spawn: Found a spawned: %1", _type];
+						_vehiclesWithoutOwner = _vehiclesWithoutOwner + 1;
+						
+						if (_object isKindOf "Land") then {
+							_vehiclesWithoutOwner_Land = _vehiclesWithoutOwner_Land + 1;
+							
+							//check if this vehicle is in the list
+							for "_x" from 0 to _lastIndex_VSL_Land do {
+								
+								if (_type == ((_VSL_Land select _x) select 0)) then {
+									
+									if (((_VSL_Land select _x) select 1) > 0) then {
+										(_VSL_Land select _x) set [1, ((_VSL_Land select _x) select 1) - 1];	//if its in the list. decrease the spawn counter
+										//diag_log format["Veh-Spawn: set number to: %1", (_VSL_Land select _x) select 1];
+									} else {
+										diag_log format["HIVE: Warning - Too many %1 without owner detected.", _type];
+									};
+									//exitWith {}; //exits the for scope - saves runtime
+								};
+							};
+						};
+						
+						if (_object isKindOf "Air") then {
+							_vehiclesWithoutOwner_Air = _vehiclesWithoutOwner_Air + 1;
+							
+							//check if this vehicle is in the list
+							for "_x" from 0 to _lastIndex_VSL_Air do {
+								
+								if (_type == ((_VSL_Air select _x) select 0)) then {
+									
+									if (((_VSL_Air select _x) select 1) > 0) then {
+										(_VSL_Air select _x) set [1, ((_VSL_Air select _x) select 1) - 1];	//if its in the list. decrease the spawn counter
+										//diag_log format["Veh-Spawn: set number to: %1", (_VSL_Air select _x) select 1];
+									} else {
+										diag_log format["HIVE: Warning - Too many %1 without owner detected.", _type];
+									};
+									//exitWith {}; //exits the for scope - saves runtime
+								};
+							};
+						};
+						
+						if (_object isKindOf "Ship") then {
+							_vehiclesWithoutOwner_Sea = _vehiclesWithoutOwner_Sea + 1;
+							
+							//check if this vehicle is in the list
+							for "_x" from 0 to _lastIndex_VSL_Sea do {
+								
+								if (_type == ((_VSL_Sea select _x) select 0)) then {
+									
+									if (((_VSL_Sea select _x) select 1) > 0) then {
+										(_VSL_Sea select _x) set [1, ((_VSL_Sea select _x) select 1) - 1];	//if its in the list. decrease the spawn counter
+										//diag_log format["Veh-Spawn: set number to: %1", (_VSL_Sea select _x) select 1];
+									} else {
+										diag_log format["HIVE: Warning - Too many %1 without owner detected.", _type];
+									};
+									//exitWith {}; //exits the for scope - saves runtime
+								};
+							};
+						};
+					};
+					
 					_totalvehicles = _totalvehicles + 1;
 
 					// total each vehicle
@@ -284,6 +391,27 @@ if (isServer and isNil "sm_done") then {
 	} forEach (_BuildingQueue + _objectQueue);
 	// # END SPAWN OBJECTS #
 
+	for "_x" from 0 to _lastIndex_VSL_Land do {
+		if (((_VSL_Land select _x) select 1) == 0) then {
+			_VSL_Land set [_x,"deletethis"];
+		};
+	};
+	_VSL_Land = _VSL_Land - ["deletethis"];
+	
+	for "_x" from 0 to _lastIndex_VSL_Air do {
+		if (((_VSL_Air select _x) select 1) == 0) then {
+			_VSL_Air set [_x,"deletethis"];
+		};
+	};
+	_VSL_Air = _VSL_Air - ["deletethis"];
+	
+	for "_x" from 0 to _lastIndex_VSL_Sea do {
+		if (((_VSL_Sea select _x) select 1) == 0) then {
+			_VSL_Sea set [_x,"deletethis"];
+		};
+	};
+	_VSL_Sea = _VSL_Sea - ["deletethis"];
+	
 	// preload server traders menu data into cache
 	if !(DZE_ConfigTrader) then {
 		{
@@ -325,14 +453,34 @@ if (isServer and isNil "sm_done") then {
 
 	if (_hiveLoaded) then {
 		//  spawn_vehicles
-		_vehLimit = MaxVehicleLimit - _totalvehicles;
-		if(_vehLimit > 0) then {
-			diag_log ("HIVE: Spawning # of Vehicles: " + str(_vehLimit));
-			for "_x" from 1 to _vehLimit do {
-				[] spawn spawn_vehicles;
-			};
-		} else {
-			diag_log "HIVE: Vehicle Spawn limit reached!";
+		//_vehiclesToSpawn_Overall = MaxVehicleLimit - _totalvehicles;   //-original Epoch code
+		diag_log format["HIVE: Vehicles with owner: %1. Vehicles without owner: %2. Land Vehicles without owner: %3. Air Vehicles without owner: %4. Ship Vehicles without owner: %5. ", _vehiclesWithOwner, _vehiclesWithoutOwner, _vehiclesWithoutOwner_Land, _vehiclesWithoutOwner_Air, _vehiclesWithoutOwner_Sea];
+		_vehiclesToSpawn_Land = MaxVehicleLimit_Land - _vehiclesWithoutOwner_Land;
+		_vehiclesToSpawn_Air = MaxVehicleLimit_Air - _vehiclesWithoutOwner_Air;
+		_vehiclesToSpawn_Sea = MaxVehicleLimit_Sea - _vehiclesWithoutOwner_Sea;
+		diag_log format["HIVE: Vehicles to spawn - Land: %1. Air: %2. Sea: %3.", _vehiclesToSpawn_Land, _vehiclesToSpawn_Air, _vehiclesToSpawn_Sea];
+		
+		//prepare temp variables
+		_resultLand = 0;
+		_resultAir = 0;
+		_resultSea = 0;
+		
+		if (_vehiclesToSpawn_Land > 0) then {
+		_resultLand = [_VSL_Land, _vehiclesToSpawn_Land] call vehiclespawn_manager;
+		waitUntil{_resultLand};
+		diag_log format["_resultLand: %1.", _resultLand];
+		};
+		
+		if ((_vehiclesToSpawn_Air > 0) && (count(_VSL_Air) != 0)) then {
+			_resultAir = [_VSL_Air, _vehiclesToSpawn_Air] call vehiclespawn_manager;
+			waitUntil{_resultAir};
+			diag_log format["_resultAir: %1.", _resultAir];
+		};
+		
+		if ((_vehiclesToSpawn_Sea > 0) && (count(_VSL_Sea) != 0)) then {
+			_resultSea = [_VSL_Sea, _vehiclesToSpawn_Sea] call vehiclespawn_manager;
+			waitUntil{_resultSea};
+			diag_log format["_resultSea: %1.", _resultSea];
 		};
 	};
 	

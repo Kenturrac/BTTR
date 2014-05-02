@@ -37,6 +37,7 @@ server_spawnEvents =			compile preprocessFileLineNumbers "\z\addons\dayz_server\
 fnc_plyrHit   =					compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_plyrHit.sqf";
 server_deaths = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerDeaths.sqf";
 server_maintainArea = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_maintainArea.sqf";
+server_spawnvehicle =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnVehicle.sqf";
 
 /* PVS/PVC - Skaronator */
 server_sendToClient =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_sendToClient.sqf";
@@ -241,6 +242,75 @@ BuildingList = [];
 	
 	
 } forEach (MarkerPosition nearObjects ["building",DynamicVehicleArea]);
+
+vehiclespawn_manager = {														// created by Kenturrac
+	private ["_VehicleSpawnList","_vehiclesToSpawn","_tempindex","_typeToSpawn","_minDmg","_maxDmg","_spawnLocationType","_amount","_dmgType","_probability"];
+	
+	_VehicleSpawnList = _this select 0;		// list to select vehicles from
+	_vehiclesToSpawn = _this select 1;		// amount of vehicles to spawn
+
+	
+	if (!isDedicated) exitWith { }; // makes sure that this runs on the dedicated server
+	
+	for "_x" from 1 to _vehiclesToSpawn do {
+		if ((count _VehicleSpawnList) > 0) then { 
+			
+			// spawn vehicles from the list, if there are some left
+			_tempindex = floor(random(count _VehicleSpawnList));
+			_typeToSpawn = (_VehicleSpawnList select _tempindex) select 0;
+			_amount = (_VehicleSpawnList select _tempindex) select 1;
+			_minDmg = (_VehicleSpawnList select _tempindex) select 2;
+			_maxDmg = (_VehicleSpawnList select _tempindex) select 3;
+			_dmgType = (_VehicleSpawnList select _tempindex) select 4;
+			_spawnLocationType = (_VehicleSpawnList select _tempindex) select 5;
+			_probability = (_VehicleSpawnList select _tempindex) select 6;
+			
+			//check for wildcard
+			if (((random 1) <= WildcardProbability) && (_typeToSpawn != "UH1H_DZE")) then {
+				_minDmg = 0;
+				_maxDmg = 75;
+				_dmgType = 0;
+				diag_log format["VehicleManager: Wildcard!!! Mix up damage settings for the spawn of %1. - _minDmg: %2; _maxDmg: %3; _dmgType: %4;", _typeToSpawn, _minDmg, _maxDmg, _dmgType];
+			};
+			
+			//check for probability
+			if ((random 1) <= _probability) then {
+				diag_log format["VehicleManager: Initialise %1. spawn of %2 vehicles: %3", _x, _vehiclesToSpawn, _typeToSpawn];
+				[_typeToSpawn, _minDmg, _maxDmg, _dmgType, _spawnLocationType] spawn server_spawnvehicle;
+			} else {
+				diag_log format["VehicleManager: Probability to low. Didn't spawn this time. - Probability of %1 to spawn: %2", _typeToSpawn, _probability];
+			};
+
+			// reduce the size of the list
+			_amount = _amount - 1;
+			
+			// if one item is on 0, remove it or reduce safe the new value if not
+			if (_amount == 0) then {
+				_VehicleSpawnList set [_tempindex,"deletethis"];
+				_VehicleSpawnList = _VehicleSpawnList - ["deletethis"];
+			} else {
+				(_VehicleSpawnList select _tempindex) set [1, _amount]
+			};
+			
+		} else {
+
+			// spawn from generic list
+			while {true} do {
+				_tempindex = floor(random(count VehicleSpawnList_Generic));
+				_typeToSpawn = (VehicleSpawnList_Generic select _tempindex) select 0;
+				_minDmg = (VehicleSpawnList_Generic select _tempindex) select 2;
+				_maxDmg = (VehicleSpawnList_Generic select _tempindex) select 3;
+				_dmgType = (VehicleSpawnList_Generic select _tempindex) select 4;
+				_spawnLocationType = (VehicleSpawnList_Generic select _tempindex) select 5;
+				_probability = (VehicleSpawnList_Generic select _tempindex) select 6;
+				if ((random 1) <= _probability) exitWith {};
+			};
+			diag_log format["VehicleManager: Initialise %1. spawn of %2 vehicles: %3", _x, _vehiclesToSpawn, _typeToSpawn];
+			[_typeToSpawn, _minDmg, _maxDmg, _dmgType, _spawnLocationType] spawn server_spawnvehicle;
+		};
+	};
+	true;
+};
 
 spawn_vehicles = {
 	private ["_random","_lastIndex","_weights","_index","_vehicle","_velimit","_qty","_isAir","_isShip","_position","_dir","_istoomany","_veh","_objPosition","_marker","_iClass","_itemTypes","_cntWeights","_itemType","_num","_allCfgLoots"];
