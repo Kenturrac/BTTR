@@ -44,7 +44,7 @@ spawnLocations_Event = [						//spawnLocations [[X,Y,Z],MinRadius,MaxRadius)
 ];
 
 MaxHeliCrashes= 2;
-MaxAmmoBoxes = 0;		// Ammobox = 3
+MaxAmmoBoxes = 50;		// Ammobox = 3
 MaxMineVeins = 0;		// Minen = 50
 MaxVehicleLimit_Overall = 300; // not in use any more - ignore it
 MaxVehicleLimit_Land = 220;
