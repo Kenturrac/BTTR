@@ -111,8 +111,6 @@ if (isServer and isNil "sm_done") then {
 	_vehiclesWithoutOwner_Sea = 0;
 	_vehiclesWithoutOwner_Land = 0;
 	
-	_amountInVSL_Land = 0;
-	
 	// VSL - Vehicle
 	_VSL_Land = VehicleSpawnList_Land;
 	_lastIndex_VSL_Land = (count _VSL_Land) - 1;

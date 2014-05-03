@@ -23,7 +23,7 @@ diag_log format["Veh-Spawn: _typeToSpawn: %1. _minDmg: %2. _maxDmg: %3. _dmgType
 
 if (_spawnLocationType == 0) then {
 	// Spawn around buildings and 50% near roads
-	if((random 1) > 0.65) then {
+	if((random 1) > 0.35) then {
 		while {true} do {
 			waitUntil{!isNil "BIS_fnc_selectRandom"};
 			_position = RoadList call BIS_fnc_selectRandom;
