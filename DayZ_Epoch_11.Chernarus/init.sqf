@@ -2,8 +2,6 @@
 	For DayZ Epoch
 	Addons Credits: Jetski Yanahui by Kol9yN, Zakat, Gerasimow9, YuraPetrov, zGuba, A.Karagod, IceBreakr, Sahbazz
 */
-//Debug console
-//#include "custom\debug_console\debug_console.hpp"
 
 startLoadingScreen ["","RscDisplayLoadCustom"];
 cutText ["","BLACK OUT"];
@@ -149,7 +147,7 @@ execVM "\z\addons\dayz_code\external\DynamicWeatherEffects.sqf";
 #include "\z\addons\dayz_code\system\BIS_Effects\init.sqf"
 
 //safezone
-[] execVM "dami_SZ.sqf";
+[] execVM "custom\safezone\dami_SZ.sqf";
 
 
 
