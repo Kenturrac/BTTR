@@ -115,7 +115,7 @@ if (isServer) then {
 	_serverMonitor = 	[] execVM "\z\addons\dayz_code\system\server_monitor.sqf";
 	
 	DZE_DiagVerbose = true; //Reports fps, total object count, and player count.
-	DZE_DiagFpsSlow = true; //Report fps every 5 minutes
+	DZE_DiagFpsFast = true; //Report fps every 5 minutes
 };
 
 if (!isDedicated) then {

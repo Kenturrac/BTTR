@@ -38,6 +38,7 @@ fnc_plyrHit   =					compile preprocessFileLineNumbers "\z\addons\dayz_server\com
 server_deaths = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerDeaths.sqf";
 server_maintainArea = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_maintainArea.sqf";
 server_spawnvehicle =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnVehicle.sqf";
+server_safezoneCleanup = 		compile preProcessFileLineNumbers "\z\addons\dayz_server\compile\server_safezoneCleanup.sqf";
 
 /* PVS/PVC - Skaronator */
 server_sendToClient =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_sendToClient.sqf";
@@ -1012,3 +1013,4 @@ call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\airfield.
 call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\kueste_u_miliba.sqf";
 call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\basespot.sqf";
 call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\berezino_milib.sqf";
+call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\parkingarea.sqf";
