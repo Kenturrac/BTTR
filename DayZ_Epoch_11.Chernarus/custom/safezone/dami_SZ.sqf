@@ -19,7 +19,7 @@ if (isServer) exitWith {
 		dami_szCHK = false;
 		canbuild = false;
 		SZ_SkTyp = typeOf player;
-		_txt = "You have entered a safezone! Running people over, stealing, or griefing within safezones shall result in a ban! YOU HAVE BEEN WARNED!";
+		_txt = "You have entered a safezone! Take care of your stuff there are no rules in this area. Vehicles will be teleported outside of the area during server restart.";
 		systemChat ("SAFE-ZONE: "+str _txt+"");
 		//cutText [_txt,"PLAIN DOWN"];
 		["Safe Zone"] spawn bis_fnc_infotext;
