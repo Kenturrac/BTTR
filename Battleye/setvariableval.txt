@@ -37,7 +37,6 @@
 5 "while"
 5 "markerText"
 5 "BIS_fnc"
-5 "\+" !"e\+00" 
 5 "_bis"
 5 "markertype"
 5 "teamtype"

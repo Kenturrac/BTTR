@@ -10,7 +10,7 @@
 /* ********************************************************************************* */
 /*  Top esc menu TXT      */ _TopOfESC = "Back to the Roots"; //do not use " in this text.
 /*  Bottom esc menu TXT   */ _LowerTop = "Web: www.bttr-dayz.de"; //do not use " in this text.
-/*  Bottom esc menu TXT2  */ _LowerBottom = "TS:146.0.32.47 PW:epoch"; //do not use " in this text.
+/*  Bottom esc menu TXT2  */ _LowerBottom = "TS: 146.0.32.47 PW: epoch"; //do not use " in this text.
 /*  Color esc menu TXT    */ _EscColor = [0.6,0,0,1];
 /*  DebugMonitor TXT      */ _BottomDebug = "[BttR]"; //do not use " in this text.
 /*  DebugMonitor Key      */ _ODK =  0xCF;	/* google DIK_KeyCodes (0xCF is END) */
