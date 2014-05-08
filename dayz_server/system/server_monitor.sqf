@@ -303,7 +303,7 @@ if (isServer and isNil "sm_done") then {
 				_object setFuel _fuel;
 				
 				// check if vehicle is in safezone. if so, teleport it to parking lock 			- Kenturrac
-				[_object] call server_safezoneCleanup;
+				//[_object] call server_safezoneCleanup;
 
 				if (!((typeOf _object) in dayz_allowedObjects)) then {
 					
