@@ -1013,4 +1013,4 @@ call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\airfield.
 call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\kueste_u_miliba.sqf";
 call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\basespot.sqf";
 call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\berezino_milib.sqf";
-call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\parkingarea.sqf";
+//call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\parkingarea.sqf";
