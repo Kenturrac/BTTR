@@ -15,25 +15,24 @@ if (isServer) exitWith {
 	waitUntil {(!isNil "dami_ANTIRUN")};
 	if (isNil "inSafezone") then {inSafezone = false;};
 	while {true} do {
-		waitUntil {sleep 0.5;(inSafeZone)};
+		waitUntil {sleep 1;(inSafeZone)};
 		dami_szCHK = false;
 		canbuild = false;
 		SZ_SkTyp = typeOf player;
-		_txt = "You have entered a safezone! Take care of your stuff there are no rules in this area. Vehicles will be teleported outside of the area during server restart.";
-		systemChat ("SAFE-ZONE: "+str _txt+"");
+		systemChat ("SAFE-ZONE: You have entered a safezone! Take care of your stuff, there are no rules in this area. Vehicles will be parked outside of the area during server restart. Salvage vehicles is disabled in safezones.");
 		//cutText [_txt,"PLAIN DOWN"];
 		["Safe Zone"] spawn bis_fnc_infotext;
-		[] spawn dami_ANTIRUN;
+		[] spawn kenturrac_ActivateVP;
+		//[] spawn dami_ANTIRUN;		// disabled since it seems that this is not working correctly
 		[] spawn dami_ZSHIELD;
-		[] spawn dami_ANTITHEFT;
-		[] spawn dami_PP;
+		//[] spawn dami_ANTITHEFT;		// deactivated and replaced by a simpler and more effective system by Kenturrac
+		[] spawn dami_ActivatePP;
 		waitUntil {sleep 0.5;((!inSafeZone)||(typeOf player != SZ_SkTyp))};
 		if (inSafeZone) then {		
 			if (typeOf player != SZ_SkTyp) then {
 				[] spawn {
 					inSafeZone = false;
-					_txt = "Skin change detected! Toggling safezone protection...";
-					systemChat ("SAFE-ZONE: "+str _txt+"");
+					systemChat ("SAFE-ZONE: Skin change detected! Toggling safezone protection...");
 					waitUntil {dami_szCHK};
 					inSafeZone = true;
 				};
@@ -42,26 +41,15 @@ if (isServer) exitWith {
 		waitUntil {sleep 1;(!inSafeZone)};
 		canbuild = true;
 		dami_szCHK = true;
-		systemChat ("SAFE-ZONE: You have left a safezone!");
-		systemChat ("SAFE-ZONE: Safe-zone hit/kill protection will stay on for 3-6 seconds to prevent safezone snipers... TAKE COVER!");
-		sleep (3 + floor(random 3));
-		[] spawn dami_DPP;
-		if (inSafeZone) then {_txt = "It appears you have re-entered a safezone. Reenabling protection...";} else {_txt = "Safe-zone hit/kill protection has been disabled!";};
-		systemChat ("SAFE-ZONE: "+str _txt+"");
+		systemChat ("SAFE-ZONE: You have left a safezone! TAKE COVER!");
+		systemChat ("SAFE-ZONE: Safe-zone hit/kill protection are disabled... ");
+		[] spawn dami_DeactivatePP;
+		[] spawn kenturrac_DeactivateVP;
 	};
 };
-dami_DPP = {
-	player removeEventHandler ["Fired", 	SafeZone_FIRED];
-	player removeEventHandler ["Hit", 		SafeZone_HIT];
-	player removeEventHandler ["Killed", 	SafeZone_KILLED];
-	fnc_usec_unconscious 	= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_unconscious.sqf";
-	player_death 			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_death.sqf";
-	player_zombieCheck 		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_zombieCheck.sqf";
-	fnc_usec_damageHandler 	= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_damageHandler.sqf";
-};
-dami_PP = {
-	_txt = "Infantry protection loaded.";
-	systemChat ("SAFE-ZONE: "+str _txt+"");
+
+dami_ActivatePP = {
+	systemChat ("SAFE-ZONE: Infantry protection loaded.");
 	SafeZone_FIRED  = player addEventHandler ["Fired",	{call dami_pfired}];
 	SafeZone_HIT    = player addEventHandler ["Hit",	{call dami_phit}];
 	SafeZone_KILLED = player addEventHandler ["Killed",	{call dami_pkill}];
@@ -70,10 +58,52 @@ dami_PP = {
 	player_zombieCheck 		= {};
 	fnc_usec_damageHandler 	= {};
 };
+
+dami_DeactivatePP = {
+	player removeEventHandler ["Fired", 	SafeZone_FIRED];
+	player removeEventHandler ["Hit", 		SafeZone_HIT];
+	player removeEventHandler ["Killed", 	SafeZone_KILLED];
+	fnc_usec_unconscious 	= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_unconscious.sqf";
+	player_death 			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_death.sqf";
+	player_zombieCheck 		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_zombieCheck.sqf";
+	fnc_usec_damageHandler 	= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_damageHandler.sqf";
+};
+
+kenturrac_ActivateVP = {
+	_vehicle = (vehicle player);
+	if (_vehicle != player) then {
+		systemChat ("SAFE-ZONE: Vehicle protection loaded.");
+		// Apply clientside vehicle protection
+		_vehicle removeAllEventHandlers "handleDamage";
+		_vehicle addEventHandler ["handleDamage", {false}];
+		_vehicle allowDamage false;
+		// Disable mounted gun
+		SafeZone_VehFIRED = _vehicle addEventHandler ["Fired",	{call dami_vfired}];
+	};
+};
+
+kenturrac_DeactivateVP = {
+	_vehicle = (vehicle player);
+	if (_vehicle != player) then {
+		// Apply clientside vehicle protection
+		_vehicle addEventHandler ["handleDamage", {true}];
+		_vehicle removeAllEventHandlers "handleDamage";
+		_vehicle allowDamage true;
+		// Enable mounted gun
+		_vehicle removeEventHandler ["Fired", SafeZone_VehFIRED];
+	};
+};
+
+dami_vfired = {
+	nearestObject [(_this select 0),(_this select 4)] setPos[0,0,0];
+	cutText ["You are not allowed to shoot in safezones","PLAIN DOWN"];
+};
+
 dami_pfired = {
 	nearestObject [(_this select 0),(_this select 4)] setPos[0,0,0];
 	cutText ["You are not allowed to shoot in safezones","PLAIN DOWN"];
 };
+
 dami_pkill = {
 	_killer = (_this select 1);
 	_nKill = name _killer;
@@ -90,6 +120,7 @@ dami_pkill = {
 		systemChat (str _msg);
 	};
 };
+
 dami_phit = {
 	_attker = (_this select 1);
 	_nAttkr = name _attker;
@@ -106,16 +137,7 @@ dami_phit = {
 		systemChat (str _msg);
 	};
 };
-ANTI_THEFT = {
-	player action ["GEAR",objNull];
-	_txt = 'You can not access backpacks while too close to a player!';
-	systemChat ('SAFEZONE: '+str _txt+'');
-	cutText [_txt,'PLAIN DOWN'];
-	sleep 0.5;
-	_txt = 'You are only allowed to access your friends backpacks!';
-	systemChat ('SAFEZONE: '+str _txt+'');
-	cutText [_txt,'PLAIN DOWN'];
-};
+
 dami_ZSHIELD = {
 	if (isNil 'no_zombies_loop') then {
 		while {true} do {
@@ -128,6 +150,7 @@ dami_ZSHIELD = {
 		};
 	};
 };
+
 dami_ANTITHEFT = {
 	if (isNil 'anti_theft_loop') then {
 		waitUntil {sleep 1;((vehicle player == player)||(!inSafeZone))};
@@ -169,11 +192,23 @@ dami_ANTITHEFT = {
 		anti_theft_loop = nil;
 	};
 };
+
+ANTI_THEFT = {
+	player action ["GEAR",objNull];
+	_txt = 'You can not access backpacks while too close to a player!';
+	systemChat ('SAFEZONE: '+str _txt+'');
+	cutText [_txt,'PLAIN DOWN'];
+	sleep 0.5;
+	_txt = 'You are only allowed to access your friends backpacks!';
+	systemChat ('SAFEZONE: '+str _txt+'');
+	cutText [_txt,'PLAIN DOWN'];
+};
+
 dami_ANTIRUN = {
 	if (isNil 'vehicle_protection_loop') then {
 		waitUntil {sleep 1;(vehicle player != player)||(!inSafeZone)};
 		if (!inSafeZone) exitWith {};
-		systemChat ("SAFE-ZONE: Vehicle protection loaded.");
+		systemChat ("SAFE-ZONE: Antioverrun protection loaded.");
 		while {true} do {
 			if ((vehicle player == player)||(!inSafeZone)) exitWith {};
 			vehicle_protection_loop = true;
@@ -188,3 +223,4 @@ dami_ANTIRUN = {
 		};
 	};
 };
+

@@ -39,6 +39,7 @@ server_deaths = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\com
 server_maintainArea = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_maintainArea.sqf";
 server_spawnvehicle =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnVehicle.sqf";
 server_safezoneCleanup = 		compile preProcessFileLineNumbers "\z\addons\dayz_server\compile\server_safezoneCleanup.sqf";
+server_safezoneVehicleGodmode = compile preProcessFileLineNumbers "\z\addons\dayz_server\compile\server_safezoneVehicleGodmode.sqf";
 
 /* PVS/PVC - Skaronator */
 server_sendToClient =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_sendToClient.sqf";

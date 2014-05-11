@@ -558,4 +558,6 @@ if (isServer and isNil "sm_done") then {
 	[] ExecVM "\z\addons\dayz_server\DZMS\DZMSInit.sqf";
 	sm_done = true;
 	publicVariable "sm_done";
+
+	[] spawn server_safezoneVehicleGodmode;
 };
