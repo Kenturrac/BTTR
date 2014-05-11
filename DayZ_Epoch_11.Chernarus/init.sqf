@@ -99,23 +99,21 @@ progressLoadingScreen 0.4;
 call compile preprocessFileLineNumbers "compiles.sqf";				//Compile regular functions
 progressLoadingScreen 0.5;
 call compile preprocessFileLineNumbers "server_traders.sqf";				//Compile trader configs
-call compile preprocessFileLineNumbers "custom\compiles.sqf"; //Compile custom compiles
 progressLoadingScreen 1.0;
 
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
 if (isServer) then {
+	// Show FPS in .rpt file
+	DZE_DiagFpsFast = true; //Report fps every minute
+	DZE_DiagVerbose = true; //Reports fps, total object count, and player count.
+
 	call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\DayZ_Epoch_11.Chernarus\dynamic_vehicle.sqf";
 	call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\DayZ_Epoch_11.Chernarus\vehicle_spawn_lists.sqf";
-	
-	//Compile vehicle configs
 	
 	// Add trader citys
 	_nil = [] execVM "\z\addons\dayz_server\missions\DayZ_Epoch_11.Chernarus\mission.sqf";
 	_serverMonitor = 	[] execVM "\z\addons\dayz_code\system\server_monitor.sqf";
-	
-	DZE_DiagVerbose = true; //Reports fps, total object count, and player count.
-	DZE_DiagFpsFast = true; //Report fps every minute
 };
 
 if (!isDedicated) then {
