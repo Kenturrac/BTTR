@@ -11,7 +11,7 @@ if (!isDedicated) then {
 	player_zombieAttack = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_zombieAttack.sqf";	//Run on a players computer, causes a nearby zombie to attack them
 	fnc_usec_damageActions =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_damageActions.sqf";		//Checks which actions for nearby casualty
 	fnc_inAngleSector =				compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_inAngleSector.sqf";		//Checks which actions for nearby casualty
-	fnc_usec_selfActions =			compile preprocessFileLineNumbers "custom\fn_selfActions.sqf";		//Checks which actions for self
+	fnc_usec_selfActions =			compile preprocessFileLineNumbers "custom\dayz_code\compile\fn_selfActions.sqf";		//Checks which actions for self
 	fnc_usec_unconscious =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_unconscious.sqf";
 	player_temp_calculation	=		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_temperatur.sqf";		//Temperatur System	//TeeChange
 	player_weaponFiredNear =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_weaponFiredNear.sqf";
@@ -36,7 +36,7 @@ if (!isDedicated) then {
 	player_removeNet =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_removeNet.sqf";
 	player_removeTankTrap =    		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_removeTankTrap.sqf";
 
-	player_unlockDoor =			compile preprocessFileLineNumbers "custom\player_unlockDoor.sqf";
+	player_unlockDoor =			compile preprocessFileLineNumbers "custom\dayz_code\compile\player_unlockDoor.sqf";
 	player_changeCombo =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_changeCombo.sqf";
 	
 	player_lockVault =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_lockVault.sqf";
