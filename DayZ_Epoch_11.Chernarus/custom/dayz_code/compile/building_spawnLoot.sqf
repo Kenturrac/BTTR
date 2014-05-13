@@ -63,6 +63,4 @@ if (count(_plotpoles) == 0) then {
 		};
 	} forEach _positionsSmall;
 	//["building_spawnLoot.sqf",(diag_tickTime - _t1)] call fnc_dump;
-} else {
-	diag_log format ["Cant spawn loot. Plotpole in range."];
 };
