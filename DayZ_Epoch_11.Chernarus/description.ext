@@ -16,7 +16,7 @@ briefing = 0;
 debriefing = 0;
 
 onPauseScript = "";
-loadScreen = "login\login_1.paa";
+loadScreen = "loginScreen\loadingScreen.jpg";
 
 class Header
 {
