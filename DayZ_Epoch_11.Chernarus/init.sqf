@@ -104,10 +104,6 @@ progressLoadingScreen 1.0;
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
 if (isServer) then {
-	// Show FPS in .rpt file
-	DZE_DiagFpsFast = true; //Report fps every minute
-	DZE_DiagVerbose = true; //Reports fps, total object count, and player count.
-
 	call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\DayZ_Epoch_11.Chernarus\dynamic_vehicle.sqf";
 	call compile preprocessFileLineNumbers "\z\addons\dayz_server\missions\DayZ_Epoch_11.Chernarus\vehicle_spawn_lists.sqf";
 	
@@ -119,6 +115,9 @@ if (isServer) then {
 if (!isDedicated) then {
 	// Intro
 	[] execVM "custom\intro\server_WelcomeCredits.sqf";
+
+	// Infoscreen
+	[] execVM "custom\info\player_infoScreen.sqf";
 
 	//Conduct map operations
 	0 fadeSound 0;
