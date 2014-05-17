@@ -1015,3 +1015,5 @@ call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\kueste_u_
 call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\basespot.sqf";
 call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\berezino_milib.sqf";
 //call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\parkingarea.sqf";
+call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\willowLake_castle.sqf";
+call compile preProcessFileLineNumbers "z\addons\dayz_server\custommap\novySobor.sqf";
